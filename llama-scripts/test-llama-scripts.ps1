@@ -50,14 +50,29 @@ $ScriptsWithProjectRoot = @(
     "update-llamacpp-cuda13.ps1",
     "start-llamacpp-server.ps1",
     "stop-llamacpp-server.ps1",
+    "restart-llamacpp-server.ps1",
     "check-llamacpp-version.ps1",
     "register-update-task-run-logged-off.ps1"
 )
 
 foreach ($ScriptName in $ScriptsWithProjectRoot) {
-    $ScriptText = Get-Content -Path (Join-Path $ScriptsDir $ScriptName) -Raw
+    $ScriptPath = Join-Path $ScriptsDir $ScriptName
+    Assert-True (Test-Path $ScriptPath) "$ScriptName should exist."
+
+    $ScriptText = Get-Content -Path $ScriptPath -Raw
     Assert-True ($ScriptText -notmatch '\$env:USERPROFILE\s+"Documents\\GitHub\\llama_cpp"') "$ScriptName should not hard-code the project under USERPROFILE."
 }
+
+$RestartScriptPath = Join-Path $ScriptsDir "restart-llamacpp-server.ps1"
+Assert-True (Test-Path $RestartScriptPath) "restart-llamacpp-server.ps1 should exist."
+
+$RestartScriptText = Get-Content -Path $RestartScriptPath -Raw
+$StopInvocationIndex = $RestartScriptText.IndexOf("stop-llamacpp-server.ps1")
+$StartInvocationIndex = $RestartScriptText.IndexOf("start-llamacpp-server.ps1")
+
+Assert-True ($StopInvocationIndex -ge 0) "restart-llamacpp-server.ps1 should call stop-llamacpp-server.ps1."
+Assert-True ($StartInvocationIndex -ge 0) "restart-llamacpp-server.ps1 should call start-llamacpp-server.ps1."
+Assert-True ($StopInvocationIndex -lt $StartInvocationIndex) "restart-llamacpp-server.ps1 should stop before starting."
 
 $TempLog = Join-Path ([System.IO.Path]::GetTempPath()) ("llama-log-test-" + [guid]::NewGuid().ToString("N") + ".log")
 try {

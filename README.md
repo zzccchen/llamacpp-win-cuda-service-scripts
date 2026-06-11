@@ -77,6 +77,8 @@ The default server URL is `http://127.0.0.1:8080`.
   `llama-server`。 / Starts `llama-server` with the local models preset.
 - `llama-scripts/stop-llamacpp-server.ps1`：卸载已加载模型并停止 server 进程。 /
   Unloads loaded models and stops the server process.
+- `llama-scripts/restart-llamacpp-server.ps1`：先停止再启动 server。 / Stops and
+  then starts the server.
 - `llama-scripts/check-llamacpp-version.ps1`：比较本地启用版本和上游最新 release。
   / Compares the local active build with the latest upstream release.
 - `llama-scripts/register-update-task-run-logged-off.ps1`：注册周期更新的 Windows
