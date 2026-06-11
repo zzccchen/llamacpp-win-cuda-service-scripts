@@ -73,6 +73,7 @@ $StartInvocationIndex = $RestartScriptText.IndexOf("start-llamacpp-server.ps1")
 Assert-True ($StopInvocationIndex -ge 0) "restart-llamacpp-server.ps1 should call stop-llamacpp-server.ps1."
 Assert-True ($StartInvocationIndex -ge 0) "restart-llamacpp-server.ps1 should call start-llamacpp-server.ps1."
 Assert-True ($StopInvocationIndex -lt $StartInvocationIndex) "restart-llamacpp-server.ps1 should stop before starting."
+Assert-True ($RestartScriptText -match "models\.ini") "restart-llamacpp-server.ps1 should explain that it applies models.ini changes."
 
 $TempLog = Join-Path ([System.IO.Path]::GetTempPath()) ("llama-log-test-" + [guid]::NewGuid().ToString("N") + ".log")
 try {

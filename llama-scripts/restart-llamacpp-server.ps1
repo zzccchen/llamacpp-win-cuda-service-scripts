@@ -11,7 +11,7 @@ if (-not (Test-Path $StartScript)) {
     throw "Start script not found: $StartScript"
 }
 
-Write-Host "Restarting llama-server..."
+Write-Host "Restarting llama-server to apply models.ini changes..."
 
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File $StopScript
 if ($LASTEXITCODE -ne 0) {
@@ -23,4 +23,4 @@ if ($LASTEXITCODE -ne 0) {
     throw "Start script failed with exit code $LASTEXITCODE."
 }
 
-Write-Host "llama-server restarted."
+Write-Host "llama-server restarted. models.ini changes are now loaded."
