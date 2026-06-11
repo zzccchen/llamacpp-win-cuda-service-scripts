@@ -1,0 +1,24 @@
+# Local secrets and machine-specific configuration.
+llama-config/github-token.txt
+llama-config/models.ini
+
+# Downloaded llama.cpp and CUDA release artifacts.
+llama-b*-bin-win-cuda-*-x64/
+llama-download-cache/
+llama-current
+
+# Runtime state and logs.
+llama-runtime/
+llama-logs/
+*.log
+*.pid
+*.download
+
+# Large binaries should be downloaded by the scripts, not committed.
+*.dll
+*.exe
+*.zip
+*.llamacpp-release
+
+# Personal editor state.
+.vscode/
